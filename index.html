@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matteo Cicerone — Travel &amp; People Mobility Management</title>
+    <meta name="description" content="Matteo Cicerone, Business Travel Consultant in Milan. Travel &amp; People Mobility Management at Eni.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ---------- VARIABILI ---------- */
+        :root {
+            --ink-900: #0E2030;
+            --ink-850: #122739;
+            --ink-800: #16314A;
+            --ink-700: #1E3F5C;
+            --paper-100: #F5EFE0;
+            --paper-50: #FBF7EE;
+            --amber-500: #E3A23C;
+            --amber-300: #F0C27D;
+            --teal-700: #1F4E45;
+            --teal-500: #2E7768;
+            --ink-text: #16232F;
+            --cream-text: #F2ECDD;
+            --muted: #8FA4B8;
+            --muted-soft: #5E7488;
+            --max-w: 880px;
+            --radius-card: 16px;
+        }
+
+        /* ---------- RESET & BASE ---------- */
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            background: var(--ink-900);
+            color: var(--cream-text);
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; margin: 0; }
+        p { margin: 0; }
+        a { color: inherit; }
+        ul { margin: 0; padding: 0; list-style: none; }
+
+        .mono { font-family: 'IBM Plex Mono', monospace; }
+        .wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--amber-500);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
+        /* ---------- NAV ---------- */
+        .nav {
+            position: sticky; top: 0; z-index: 50;
+            background: rgba(14, 32, 48, 0.86);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+        .nav .wrap {
+            display: flex; align-items: center; justify-content: space-between;
+            padding-top: 14px; padding-bottom: 14px;
+            gap: 16px;
+        }
+        .nav-mark {
+            display: flex; align-items: center; gap: 10px;
+            font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+            letter-spacing: 0.02em; font-size: 15px; text-decoration: none;
+        }
+        .nav-mark span {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 30px; height: 30px; border-radius: 7px;
+            background: var(--amber-500); color: var(--ink-900);
+            font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 12px;
+        }
+        .nav-links {
+            display: flex; gap: 22px; overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .nav-links::-webkit-scrollbar { display: none; }
+        .nav-links a {
+            font-family: 'IBM Plex Mono', monospace; font-size: 11.5px;
+            text-transform: uppercase; letter-spacing: 0.09em;
+            color: var(--muted); text-decoration: none; white-space: nowrap;
+            padding: 6px 2px; border-bottom: 1px solid transparent;
+            transition: color .2s ease, border-color .2s ease;
+        }
+        .nav-links a:hover { color: var(--amber-300); border-color: var(--amber-500); }
+
+        /* ---------- HERO & BOARDING PASS ---------- */
+        .hero {
+            padding: 64px 0 56px;
+            background: radial-gradient(ellipse 120% 70% at 50% -10%, var(--ink-800), var(--ink-900) 65%);
+        }
+        .eyebrow {
+            font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+            letter-spacing: 0.18em; text-transform: uppercase;
+            color: var(--amber-300); margin-bottom: 18px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .eyebrow::before {
+            content: ''; width: 22px; height: 1px; background: var(--amber-500);
+        }
+
+        .boarding-pass {
+            display: flex; flex-wrap: wrap;
+            background: var(--paper-100);
+            border-radius: var(--radius-card);
+            overflow: hidden;
+            box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.55);
+            color: var(--ink-text);
+        }
+        .bp-main {
+            flex: 1 1 320px;
+            padding: 34px 36px;
+            min-width: 280px;
+        }
+        .bp-label {
+            font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+            letter-spacing: 0.16em; text-transform: uppercase;
+            color: var(--teal-700); margin-bottom: 20px;
+        }
+
+        .bp-header {
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 20px; margin-bottom: 26px;
+        }
+        .bp-header-text { flex: 1; }
+        .bp-photo {
+            width: 80px; height: 80px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid var(--paper-50);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            background-color: var(--muted);
+        }
+
+        .bp-name {
+            font-size: clamp(28px, 4.4vw, 40px);
+            font-weight: 700; line-height: 1.05;
+            margin-bottom: 8px;
+        }
+        .bp-role {
+            font-size: 16px; font-weight: 500; color: var(--teal-700);
+        }
+        .bp-fields {
+            display: grid; grid-template-columns: repeat(2, minmax(120px, 1fr));
+            gap: 18px 24px;
+        }
+        .bp-field dt {
+            font-family: 'IBM Plex Mono', monospace; font-size: 10.5px;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--muted-soft); margin-bottom: 4px;
+        }
+        .bp-field dd { margin: 0; font-size: 14px; font-weight: 600; }
+
+        .bp-divider {
+            position: relative; width: 0; flex: 0 0 auto;
+            border-left: 2px dashed rgba(22, 35, 47, 0.25);
+            margin: 22px 0;
+        }
+        .bp-divider::before, .bp-divider::after {
+            content: ''; position: absolute; left: 50%; transform: translateX(-50%);
+            width: 28px; height: 28px; border-radius: 50%;
+            background: var(--ink-900);
+        }
+        .bp-divider::before { top: -36px; }
+        .bp-divider::after { bottom: -36px; }
+
+        .bp-stub {
+            flex: 0 0 220px;
+            padding: 30px 26px 24px;
+            display: flex; flex-direction: column; gap: 14px;
+            background: linear-gradient(180deg, rgba(31, 78, 69, 0.06), transparent 40%);
+        }
+        .bp-stub-row dt {
+            font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--muted-soft); margin-bottom: 3px;
+        }
+        .bp-stub-row dd {
+            margin: 0; font-family: 'IBM Plex Mono', monospace;
+            font-size: 13.5px; font-weight: 600;
+        }
+        .bp-status { color: var(--teal-500); }
+
+        .barcode {
+            margin-top: auto; height: 38px; border-radius: 2px;
+            background: repeating-linear-gradient(to right,
+            var(--ink-text) 0 2px, transparent 2px 3px,
+            var(--ink-text) 3px 4px, transparent 4px 6px,
+            var(--ink-text) 6px 9px, transparent 9px 11px,
+            var(--ink-text) 11px 12px, transparent 12px 15px,
+            var(--ink-text) 15px 16px, transparent 16px 19px,
+            var(--ink-text) 19px 21px, transparent 21px 23px);
+            position: relative; overflow: hidden;
+        }
+        .barcode::after {
+            content: ''; position: absolute; top: 0; left: -30%;
+            width: 30%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(227, 162, 60, 0.55), transparent);
+            animation: scan 3.2s ease-in-out infinite;
+        }
+        @keyframes scan {
+            0% { left: -30%; } 55% { left: 100%; } 100% { left: 100%; }
+        }
+        .bp-ref {
+            font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+            color: var(--muted-soft); letter-spacing: 0.06em;
+        }
+
+        .hero-bio {
+            max-width: 62ch; margin-top: 30px;
+            color: var(--muted); font-size: 16px;
+        }
+
+        /* ---------- SECTION SHELL ---------- */
+        section { padding: 64px 0; }
+        .section-head {
+            display: flex; align-items: baseline; gap: 14px;
+            margin-bottom: 36px;
+        }
+        .section-head h2 { font-size: 22px; font-weight: 700; color: var(--cream-text); }
+        .section-head .tag {
+            font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+            color: var(--muted-soft); letter-spacing: 0.1em;
+        }
+        .section-rule {
+            flex: 1; height: 1px;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.14), transparent);
+        }
+
+        /* ---------- TIMELINE ---------- */
+        .timeline { position: relative; padding-left: 34px; }
+        .timeline::before {
+            content: ''; position: absolute; left: 6px; top: 6px; bottom: 6px; width: 2px;
+            background: repeating-linear-gradient(to bottom, rgba(143, 164, 184, 0.45) 0 6px, transparent 6px 13px);
+        }
+        .t-item {
+            position: relative; margin-bottom: 34px;
+            opacity: 0; transform: translateY(16px);
+            transition: opacity .6s ease, transform .6s ease;
+        }
+        .t-item.in-view { opacity: 1; transform: translateY(0); }
+        .t-item:last-child { margin-bottom: 0; }
+
+        .t-marker {
+            position: absolute; left: -34px; top: 4px;
+            width: 13px; height: 13px; border-radius: 50%;
+            border: 2px solid var(--muted);
+            background: var(--ink-900);
+        }
+        .t-item.current .t-marker {
+            border-color: var(--amber-500); background: var(--amber-500);
+            box-shadow: 0 0 0 4px rgba(227, 162, 60, 0.18);
+        }
+
+        .t-card {
+            background: var(--ink-850); border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px; padding: 22px 24px;
+        }
+        .t-top {
+            display: flex; flex-wrap: wrap; align-items: baseline;
+            gap: 8px 12px; margin-bottom: 6px;
+        }
+        .t-company {
+            font-family: 'IBM Plex Mono', monospace; font-size: 11.5px;
+            letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber-300);
+        }
+        .t-role { font-size: 17px; font-weight: 600; color: var(--cream-text); }
+        .t-meta {
+            font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+            color: var(--muted); margin-bottom: 14px;
+        }
+        .t-bullets li {
+            position: relative; padding-left: 16px; margin-bottom: 7px;
+            color: var(--muted); font-size: 14.5px; line-height: 1.55;
+        }
+        .t-bullets li:last-child { margin-bottom: 0; }
+        .t-bullets li::before {
+            content: '—'; position: absolute; left: 0; color: var(--teal-500);
+        }
+        .t-note { color: var(--muted); font-size: 14.5px; font-style: italic; }
+
+        /* ---------- EDUCATION ---------- */
+        .edu-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 20px; }
+        .card {
+            background: var(--ink-850); border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px; padding: 24px;
+        }
+        .edu-card .t-company { display: block; margin-bottom: 8px; }
+        .edu-degree { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+        .edu-years { font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: var(--muted); margin-bottom: 18px; }
+        .edu-score { display: flex; align-items: baseline; gap: 8px; }
+        .edu-score .num { font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 700; color: var(--amber-300); }
+        .edu-score .label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted-soft); text-transform: uppercase; letter-spacing: 0.08em; }
+
+        .cert {
+            display: flex; justify-content: space-between; gap: 12px;
+            padding: 14px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+        .cert:last-child { border-bottom: none; padding-bottom: 0; }
+        .cert:first-child { padding-top: 0; }
+        .cert-name { font-size: 14.5px; font-weight: 600; }
+        .cert-issuer { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+        .cert-date {
+            font-family: 'IBM Plex Mono', monospace; font-size: 11.5px;
+            color: var(--muted-soft); white-space: nowrap;
+        }
+
+        /* ---------- SKILLS ---------- */
+        .skill-block { margin-bottom: 26px; }
+        .skill-block:last-child { margin-bottom: 0; }
+        .skill-block h3 {
+            font-family: 'IBM Plex Mono', monospace; font-size: 11.5px;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--muted-soft); margin-bottom: 14px; font-weight: 500;
+        }
+        .pill-row, .chip-row { display: flex; flex-wrap: wrap; gap: 10px; }
+        .pill {
+            border: 1px solid var(--amber-500); color: var(--amber-300);
+            padding: 8px 16px; border-radius: 999px;
+            font-size: 13.5px; font-weight: 500;
+        }
+        .chip {
+            background: var(--ink-850); border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--cream-text); padding: 8px 14px; border-radius: 6px;
+            font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; letter-spacing: 0.04em;
+        }
+        .course-list li {
+            padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            font-size: 14.5px; color: var(--muted);
+        }
+        .course-list li:last-child { border-bottom: none; }
+        .course-list li::before { content: '· '; color: var(--amber-500); }
+
+        /* ---------- LANGUAGES ---------- */
+        .lang-grid { display: grid; gap: 16px; }
+        .lang-row {
+            display: flex; align-items: center; gap: 18px;
+            background: var(--ink-850); border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px; padding: 16px 20px;
+        }
+        .lang-name { width: 110px; font-weight: 600; font-size: 14.5px; flex-shrink: 0; }
+        .lang-level {
+            flex: 1; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted);
+        }
+        .lang-bars { display: flex; gap: 4px; flex-shrink: 0; }
+        .lang-bars i { width: 16px; height: 7px; border-radius: 2px; background: rgba(255, 255, 255, 0.12); display: block; }
+        .lang-bars i.fill { background: var(--amber-500); }
+
+        /* ---------- VOLUNTEERING ---------- */
+        .vol-grid { display: grid; gap: 18px; }
+        .vol-card {
+            background: var(--ink-850); border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px; padding: 22px 24px;
+        }
+        .vol-top { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+        .vol-role { font-size: 15.5px; font-weight: 600; }
+        .vol-date { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted-soft); }
+        .vol-org { font-size: 13.5px; color: var(--amber-300); margin-bottom: 10px; }
+        .vol-cat { font-size: 13.5px; color: var(--muted); }
+        .vol-aside {
+            margin-top: 16px; padding-top: 14px; border-top: 1px dashed rgba(255, 255, 255, 0.12);
+            font-size: 13px; color: var(--muted); font-style: italic;
+        }
+
+        /* ---------- FOOTER ---------- */
+        .footer {
+            background: var(--ink-850); border-top: 1px solid rgba(255, 255, 255, 0.07);
+            padding: 56px 0 40px;
+        }
+        .footer-inner {
+            display: flex; flex-wrap: wrap; justify-content: space-between;
+            gap: 28px; margin-bottom: 36px;
+        }
+        .footer h2 { font-size: 24px; margin-bottom: 10px; }
+        .footer p { color: var(--muted); max-width: 42ch; font-size: 14.5px; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--amber-500); color: var(--ink-900);
+            padding: 13px 22px; border-radius: 8px;
+            font-weight: 600; font-size: 14.5px; text-decoration: none;
+            transition: transform .2s ease, background .2s ease;
+            align-self: flex-start;
+        }
+        .btn:hover { background: var(--amber-300); transform: translateY(-2px); }
+        .footer-meta {
+            display: flex; flex-wrap: wrap; justify-content: space-between;
+            gap: 10px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.07);
+            font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: var(--muted-soft);
+        }
+
+        /* ---------- MEDIA QUERIES ---------- */
+        @media (max-width: 640px) {
+            .hero { padding: 44px 0 40px; }
+            .bp-main { padding: 26px 24px; }
+            .bp-header { flex-direction: column-reverse; align-items: flex-start; gap: 16px; }
+            .bp-photo { width: 64px; height: 64px; }
+            .bp-divider { display: none; }
+            .bp-stub { flex: 1 1 100%; border-top: 1px dashed rgba(22, 35, 47, 0.25); }
+            .bp-fields { grid-template-columns: 1fr 1fr; gap: 16px 18px; }
+            section { padding: 46px 0; }
+            .edu-grid { grid-template-columns: 1fr; }
+            .lang-row { flex-wrap: wrap; }
+            .lang-level { order: 3; flex: 1 1 100%; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .t-item { opacity: 1; transform: none; transition: none; }
+            .barcode::after { animation: none; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="nav">
+    <div class="wrap">
+        <a class="nav-mark" href="#profile"><span>MC</span> Matteo Cicerone</a>
+        <nav class="nav-links">
+            <a href="#profile">Profile</a>
+            <a href="#experience">Experience</a>
+            <a href="#education">Education</a>
+            <a href="#skills">Skills</a>
+            <a href="#languages">Languages</a>
+            <a href="#volunteering">Volunteering</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+
+    <!-- ===== HERO / BOARDING PASS ===== -->
+    <section id="profile" class="hero">
+        <div class="wrap">
+            <p class="eyebrow">Milan, IT · Eni</p>
+
+            <div class="boarding-pass">
+                <div class="bp-main">
+                    <p class="bp-label">Boarding Pass</p>
+
+                    <div class="bp-header">
+                        <div class="bp-header-text">
+                            <h1 class="bp-name">Matteo Cicerone</h1>
+                            <p class="bp-role">Travel &amp; People Mobility Management</p>
+                        </div>
+                        <img src="img.jpeg" alt="Matteo Cicerone profile photo" class="bp-photo" loading="lazy">
+                    </div>
+
+                    <dl class="bp-fields">
+                        <div class="bp-field"><dt>Company</dt><dd>Eni</dd></div>
+                        <div class="bp-field"><dt>Location</dt><dd>Milan, Lombardy</dd></div>
+                        <div class="bp-field"><dt>Industry</dt><dd>Business Travel</dd></div>
+                        <div class="bp-field"><dt>Onboard since</dt><dd>Jan 2023</dd></div>
+                    </dl>
+                </div>
+
+                <div class="bp-divider" aria-hidden="true"></div>
+
+                <div class="bp-stub">
+                    <div class="bp-stub-row"><dt>Gate</dt><dd>ENI · SDM</dd></div>
+                    <div class="bp-stub-row"><dt>Seat</dt><dd>Executive Travel</dd></div>
+                    <div class="bp-stub-row"><dt>Status</dt><dd class="bp-status">Boarding</dd></div>
+                    <div class="barcode" role="img" aria-label="Decorative barcode"></div>
+                    <p class="bp-ref">PNR MC-2018 · LINKEDIN REF.</p>
+                </div>
+            </div>
+
+            <p class="hero-bio">
+                I am a Milan-based Business Travel Consultant specializing in corporate travel management for multinational organizations. Currently serving the Executive Management at Eni, I manage comprehensive air and rail ticketing, premium hotel reservations, and high-level executive event coordination utilizing leading industry GDS platforms. My approach is defined by an unwavering commitment to punctuality, discretion, and client satisfaction. Drawing from extensive experience across travel agencies and the hospitality sector, I firmly believe that sustainable corporate growth is deeply rooted in delivering exceptional client experiences.
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== EXPERIENCE ===== -->
+    <section id="experience">
+        <div class="wrap">
+            <div class="section-head">
+                <h2>Experience</h2>
+                <span class="tag">2017 → present</span>
+                <div class="section-rule"></div>
+            </div>
+
+            <ol class="timeline">
+                <li class="t-item current">
+                    <span class="t-marker"></span>
+                    <div class="t-card">
+                        <div class="t-top">
+                            <span class="t-company">Eni</span>
+                            <span class="t-role">Executive Travel Management</span>
+                        </div>
+                        <p class="t-meta">OCT 2024 → PRESENT · 1 YR 9 MOS · SAN DONATO MILANESE · ON-SITE</p>
+                        <ul class="t-bullets">
+                            <li>Directed travel and mobility logistics for Top Management, collaborating closely with the Executive Assistants to the CEO and Chairman</li>
+                            <li>Managed comprehensive air ticketing operations, including issuance, reissuance, exchanges, and refunds via Galileo GDS</li>
+                            <li>Executed rail ticketing operations utilizing PICO and NTV platforms</li>
+                            <li>Coordinated premium hotel accommodations through Galileo GDS</li>
+                            <li>Orchestrated high-profile corporate events, Board of Directors meetings, and executive roundtables</li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="t-item current">
+                    <span class="t-marker"></span>
+                    <div class="t-card">
+                        <div class="t-top">
+                            <span class="t-company">Eni</span>
+                            <span class="t-role">Business Travel Consultant</span>
+                        </div>
+                        <p class="t-meta">JAN 2023 → PRESENT · 3 YRS 6 MOS</p>
+                        <p class="t-note">Managed specialized air ticketing operations for the Eni Corporate Travel Office.</p>
+                    </div>
+                </li>
+
+                <li class="t-item">
+                    <span class="t-marker"></span>
+                    <div class="t-card">
+                        <div class="t-top">
+                            <span class="t-company">L'Orchidea Srl · Egencia Italia partner</span>
+                            <span class="t-role">Travel &amp; Events Specialist</span>
+                        </div>
+                        <p class="t-meta">MAY 2022 → JAN 2023 · 9 MOS · MILAN</p>
+                        <ul class="t-bullets">
+                            <li>Spearheaded the organization of congresses, corporate meetings, and executive business luncheons</li>
+                            <li>Provided organizational secretariat services, ensuring seamless communication and coordination with event attendees</li>
+                            <li>Managed hotel reservations and executed air/rail ticketing utilizing SABRE, PICO, and NTV systems</li>
+                            <li>Served as an on-site coordinator and escort for group travel arrangements</li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="t-item">
+                    <span class="t-marker"></span>
+                    <div class="t-card">
+                        <div class="t-top">
+                            <span class="t-company">Egencia</span>
+                            <span class="t-role">Business Travel Consultant</span>
+                        </div>
+                        <p class="t-meta">SEP 2018 → MAY 2022 · 3 YRS 9 MOS · MILAN</p>
+                        <ul class="t-bullets">
+                            <li>Facilitated hotel accommodations and vehicle rentals, including premium chauffeur services (NCC)</li>
+                            <li>Processed complex air and rail itineraries via Amadeus, PICO, and NTV</li>
+                            <li>Orchestrated corporate meetings and large-scale company events</li>
+                            <li>Delivered dedicated client support and troubleshooting via email and phone</li>
+                            <li>Provided essential administrative support, managing invoicing, payments, and credit note processing</li>
+                            <li>Mentored and led comprehensive onboarding training for newly hired travel agents</li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="t-item">
+                    <span class="t-marker"></span>
+                    <div class="t-card">
+                        <div class="t-top">
+                            <span class="t-company">Excelsior Palace Hotel · Internship</span>
+                            <span class="t-role">Assistant Marketing Manager</span>
+                        </div>
+                        <p class="t-meta">OCT 2017 · 1 MO · RAPALLO, PORTOFINO COAST</p>
+                        <ul class="t-bullets">
+                            <li>Provided strategic secretariat and operational support to the Marketing Manager</li>
+                            <li>Conducted press reviews and compiled comprehensive property intelligence reports</li>
+                            <li>Maintained and optimized hotel profiles across various booking portals and Online Travel Agencies (OTAs)</li>
+                            <li>Executed target audience analysis and comprehensive market research initiatives</li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="t-item">
+                    <span class="t-marker"></span>
+                    <div class="t-card">
+                        <div class="t-top">
+                            <span class="t-company">Palazzo del Quirinale · Internship</span>
+                            <span class="t-role">Receptionist</span>
+                        </div>
+                        <p class="t-meta">MAY 2017 → JUN 2017 · 2 MOS · ROME</p>
+                        <ul class="t-bullets">
+                            <li>Provided formal reception and hospitality services during the 71st anniversary celebrations of the Italian Republic</li>
+                            <li>Managed high-level guest reception operations and coordinated security protocols</li>
+                        </ul>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- ===== EDUCATION ===== -->
+    <section id="education">
+        <div class="wrap">
+            <div class="section-head">
+                <h2>Education</h2>
+                <span class="tag">2013 → 2018</span>
+                <div class="section-rule"></div>
+            </div>
+
+            <div class="edu-grid">
+                <div class="card edu-card">
+                    <span class="t-company">I.P.S.E.O.A. Amerigo Vespucci</span>
+                    <p class="edu-degree">Technical and Vocational Diploma</p>
+                    <p class="edu-degree" style="font-weight:400;color:var(--muted);font-size:14px;margin-bottom:10px;">Tourism and Travel Services Management</p>
+                    <p class="edu-years">2013 – 2018</p>
+                    <div class="edu-score">
+                        <span class="num">84</span>
+                        <span class="label">/ 100</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="cert">
+                        <div>
+                            <p class="cert-name">B2 Upper Intermediate English</p>
+                            <p class="cert-issuer">IELS Malta — Institute of English Language Studies</p>
+                        </div>
+                        <span class="cert-date">APR 2018</span>
+                    </div>
+                    <div class="cert">
+                        <div>
+                            <p class="cert-name">B1 Diplôme d'études en langue française</p>
+                            <p class="cert-issuer">Institut français Italia</p>
+                        </div>
+                        <span class="cert-date">JAN 2018</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SKILLS ===== -->
+    <section id="skills">
+        <div class="wrap">
+            <div class="section-head">
+                <h2>Skills</h2>
+                <div class="section-rule"></div>
+            </div>
+
+            <div class="skill-block">
+                <h3>Core Competencies</h3>
+                <div class="pill-row">
+                    <span class="pill">Event Organization</span>
+                    <span class="pill">Travel Planning</span>
+                </div>
+            </div>
+
+            <div class="skill-block">
+                <h3>Systems &amp; GDS Platforms</h3>
+                <div class="chip-row">
+                    <span class="chip">GALILEO GDS</span>
+                    <span class="chip">AMADEUS</span>
+                    <span class="chip">SABRE</span>
+                    <span class="chip">PICO</span>
+                    <span class="chip">NTV</span>
+                </div>
+            </div>
+
+            <div class="skill-block">
+                <h3>Professional Training</h3>
+                <ul class="course-list">
+                    <li>Team Management &amp; Coordination</li>
+                    <li>Egencia Partnership Training</li>
+                    <li>Event Management</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== LANGUAGES ===== -->
+    <section id="languages">
+        <div class="wrap">
+            <div class="section-head">
+                <h2>Languages</h2>
+                <div class="section-rule"></div>
+            </div>
+
+            <div class="lang-grid">
+                <div class="lang-row">
+                    <span class="lang-name">Italian</span>
+                    <span class="lang-level">Native</span>
+                    <span class="lang-bars"><i class="fill"></i><i class="fill"></i><i class="fill"></i><i class="fill"></i></span>
+                </div>
+                <div class="lang-row">
+                    <span class="lang-name">English</span>
+                    <span class="lang-level">Full Professional Proficiency</span>
+                    <span class="lang-bars"><i class="fill"></i><i class="fill"></i><i class="fill"></i><i class="fill"></i></span>
+                </div>
+                <div class="lang-row">
+                    <span class="lang-name">French</span>
+                    <span class="lang-level">Professional Working Proficiency</span>
+                    <span class="lang-bars"><i class="fill"></i><i class="fill"></i><i class="fill"></i><i></i></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== VOLUNTEERING ===== -->
+    <section id="volunteering">
+        <div class="wrap">
+            <div class="section-head">
+                <h2>Volunteering</h2>
+                <div class="section-rule"></div>
+            </div>
+
+            <div class="vol-grid">
+                <div class="vol-card">
+                    <div class="vol-top">
+                        <span class="vol-role">Student Volunteer</span>
+                        <span class="vol-date">JAN 2017 → MAY 2017 · 5 MOS</span>
+                    </div>
+                    <p class="vol-org">Comunità di S. Egidio ACAP Onlus — D.R.E.A.M. Programme</p>
+                    <p class="vol-cat">Social Services</p>
+                </div>
+
+                <div class="vol-card">
+                    <div class="vol-top">
+                        <span class="vol-role">Apprentice Tour Guide (Cicerone)</span>
+                        <span class="vol-date">OCT 2017 → DEC 2017 · 3 MOS</span>
+                    </div>
+                    <p class="vol-org">FAI — Fondo Ambiente Italiano</p>
+                    <p class="vol-cat">Arts and Culture</p>
+                    <p class="vol-aside">A "Cicerone" is the traditional Italian term for a tour guide—a fitting role given my surname.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer id="contact" class="footer">
+    <div class="wrap">
+        <div class="footer-inner">
+            <div>
+                <h2>Let's Connect</h2>
+                <p>Based in Milan, currently at Eni (San Donato Milanese). For business travel proposals or professional collaborations, please reach out via LinkedIn.</p>
+            </div>
+            <a class="btn" href="https://www.linkedin.com/in/matteo-cicerone/" target="_blank" rel="noopener">
+                LinkedIn Profile ↗
+            </a>
+        </div>
+        <div class="footer-meta">
+            <span>Matteo Cicerone © 2026</span>
+            <span>Website generated from public LinkedIn profile data</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var items = document.querySelectorAll('.t-item');
+    if('IntersectionObserver' in window){
+        var obs = new IntersectionObserver(function(entries){
+            entries.forEach(function(entry){
+                if(entry.isIntersecting){
+                    entry.target.classList.add('in-view');
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        items.forEach(function(el){ obs.observe(el); });
+    } else {
+        items.forEach(function(el){ el.classList.add('in-view'); });
+    }
+</script>
+
+</body>
+</html>
